@@ -17,7 +17,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/kkdai/line-bot-sdk-go/linebot"
 )
@@ -47,11 +46,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, event := range events {
-		switch event.Type{
+		switch event.Type {
 		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				quota, err := bot.GetMessageQuota().Do()
 				if err != nil {
 					log.Println("Quota err:", err)
 				}
@@ -60,9 +58,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		case linebot.EventTypeJoin:
-			if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("感謝讓我加入，這個群組名稱是:"+event.Source.GroupID).Do(); err != nil {
-				log.Print(err)
-			}
-
+			// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("感謝讓我加入，這個群組名稱是:"+event.Source.GroupID).Do(); err != nil {
+			// 	log.Print(err)
+			// }
+		}
 	}
 }
