@@ -1,4 +1,4 @@
-LINE Group demo bot: A sample LINE Chatbot to demo LINE group feature by Golang
+LINE Group demo bot: A LINE Chatbot to demo LINE group features by Golang
 ==============
 
  [![GoDoc](https://godoc.org/github.com/kkdai/linebot-group.svg?status.svg)](https://godoc.org/github.com/kkdai/linebot-group)  [![Build Status](https://travis-ci.org/kkdai/linebot-group.svg?branch=master)](https://travis-ci.org/kkdai/linebot-group.svg)

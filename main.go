@@ -87,7 +87,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					//GetRoomMemberCount fail.
 					log.Printf("GetRoomMemberCount:%x", err)
 				}
-
 			}
 		}
 	}
