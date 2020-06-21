@@ -58,9 +58,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		case linebot.EventTypeJoin:
-			// if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("感謝讓我加入，這個群組名稱是:"+event.Source.GroupID).Do(); err != nil {
-			// 	log.Print(err)
-			// }
+			if groupRes, err := bot.GetGroupSummary(event.Source.GroupID).Do(); err == nil {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("感謝讓我加入，這個群組名稱是:"+groupRes.GroupName), linebot.NewImageMessage(groupRes.PictureURL, groupRes.PictureURL)).Do(); err != nil {
+					log.Print(err)
+				}
+			} else {
+				log.Print(err)
+			}
 		}
 	}
 }
