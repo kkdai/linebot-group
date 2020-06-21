@@ -1,9 +1,9 @@
 LINE Group demo bot: A sample LINE Chatbot to demo LINE group feature by Golang
 ==============
 
- [![GoDoc](https://godoc.org/github.com/kkdai/line-bot-group.svg?status.svg)](https://godoc.org/github.com/kkdai/line-bot-group)  [![Build Status](https://travis-ci.org/kkdai/line-bot-group.svg?branch=master)](https://travis-ci.org/kkdai/line-bot-group.svg)
+ [![GoDoc](https://godoc.org/github.com/kkdai/linebot-group.svg?status.svg)](https://godoc.org/github.com/kkdai/linebot-group)  [![Build Status](https://travis-ci.org/kkdai/linebot-group.svg?branch=master)](https://travis-ci.org/kkdai/linebot-group.svg)
 
-[![goreportcard.com](https://goreportcard.com/badge/github.com/kkdai/line-bot-group)](https://goreportcard.com/report/github.com/kkdai/line-bot-group)
+[![goreportcard.com](https://goreportcard.com/badge/github.com/kkdai/linebot-group)](https://goreportcard.com/report/github.com/kkdai/linebot-group)
 
 
 For LINE Group Event API, please check:
