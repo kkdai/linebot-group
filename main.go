@@ -58,12 +58,36 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		case linebot.EventTypeJoin:
-			if groupRes, err := bot.GetGroupSummary(event.Source.GroupID).Do(); err == nil {
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("感謝讓我加入，這個群組名稱是:"+groupRes.GroupName), linebot.NewImageMessage(groupRes.PictureURL, groupRes.PictureURL)).Do(); err != nil {
-					log.Print(err)
+			// If join into a Group
+			if event.Source.GroupID != "" {
+				if groupRes, err := bot.GetGroupSummary(event.Source.GroupID).Do(); err == nil {
+					if goupMemberResult, err := bot.GetGroupMemberCount(event.Source.GroupID).Do(); err == nil {
+						retString := fmt.Sprintf("感謝讓我加入這個群組，這個群組名稱是:%s, 總共有:%d 人\n", groupRes.GroupName, goupMemberResult.Count)
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(groupRes.PictureURL, groupRes.PictureURL)).Do(); err != nil {
+							//Reply fail.
+							log.Print(err)
+						}
+					} else {
+						//GetGroupMemberCount fail.
+						log.Printf("GetGroupMemberCount:%x", err)
+					}
+				} else {
+					//GetGroupSummary fail/.
+					log.Printf("GetGroupSummary:%x", err)
 				}
-			} else {
-				log.Print(err)
+			} else if event.Source.RoomID != "" {
+				// If join into a Room
+				if goupMemberResult, err := bot.GetRoomMemberCount(event.Source.RoomID).Do(); err == nil {
+					retString := fmt.Sprintf("感謝讓我加入這個聊天室，這個聊天室名總共有:%d 人\n", goupMemberResult.Count)
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString)).Do(); err != nil {
+						//Reply fail.
+						log.Print(err)
+					}
+				} else {
+					//GetRoomMemberCount fail.
+					log.Printf("GetRoomMemberCount:%x", err)
+				}
+
 			}
 		}
 	}
