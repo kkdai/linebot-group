@@ -11,10 +11,11 @@ For LINE Group Event API, please check:
 - [https://developers.line.biz/en/news/2020/06/10/messaging-api-update-june-2020/](https://developers.line.biz/en/news/2020/06/10/messaging-api-update-june-2020/)
 
 
+![](images/group_bot.jpg)
+
+
 How to use it
 =============
-
-![](images/emoji-chatbot.png)
 
 1. Scan this QR code add LINE Friend.
 
