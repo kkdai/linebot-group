@@ -1,0 +1,5 @@
+github.com/kkdai/line-bot-sdk-go v1.3.0 h1:hcqqM5fKQaJlEbsetzvG/Z2AOT8OA2tk9/EYQlhEE5k=
+github.com/kkdai/line-bot-sdk-go v7.4.2+incompatible h1:nCneJhAXq8oiQA5n7mwekmiYDKy20x2GTrKhngSIN58=
+github.com/kkdai/line-bot-sdk-go v7.4.2+incompatible/go.mod h1:G8ZdzE4krL01/9/QkaphgJPsbS5xtoaVIusHWU0tVqs=
+github.com/line/line-bot-sdk-go v7.4.0+incompatible h1:YIXstgzt9OBRWEUYxZZMsR4rdDIK8wc3RntG/s6kD4s=
+github.com/line/line-bot-sdk-go v7.4.0+incompatible/go.mod h1:0RjLjJEAU/3GIcHkC3av6O4jInAbt25nnZVmOFUgDBg=
