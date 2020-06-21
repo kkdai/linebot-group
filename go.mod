@@ -1,4 +1,4 @@
-module github.com/kkdai/LineBotTemplate
+module github.com/kkdai/linebot-group
 
 go 1.14
 
