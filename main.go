@@ -58,7 +58,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
 							log.Print(err)
 						}
-						bot.LeaveGroup(event.Source.GroupID)
+						bot.LeaveGroup(event.Source.GroupID).Do()
 					} else {
 						//Response with get member profile
 						if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
@@ -72,7 +72,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
 							log.Print(err)
 						}
-						bot.LeaveRoom(event.Source.RoomID)
+						bot.LeaveRoom(event.Source.RoomID).Do()
 					} else {
 						//Response with get member profile
 						if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
