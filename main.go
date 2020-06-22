@@ -17,6 +17,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/kkdai/line-bot-sdk-go/linebot"
 )
@@ -50,11 +51,38 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if err != nil {
-					log.Println("Quota err:", err)
-				}
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" 你好 :"+message.Text+" OK!")).Do(); err != nil {
-					log.Print(err)
+				switch {
+				case event.Source.GroupID != "":
+					//In the group
+					if strings.EqualFold(message.Text, "bye") {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
+							log.Print(err)
+						}
+						bot.LeaveGroup(event.Source.GroupID)
+					} else {
+						//Response with get member profile
+						if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
+							sendUserProfile(*profile, event)
+						}
+					}
+
+				case event.Source.RoomID != "":
+					//In the room
+					if strings.EqualFold(message.Text, "bye") {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
+							log.Print(err)
+						}
+						bot.LeaveRoom(event.Source.RoomID)
+					} else {
+						//Response with get member profile
+						if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
+							sendUserProfile(*profile, event)
+						}
+					}
+				default:
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" 你好 :"+message.Text+" OK!")).Do(); err != nil {
+						log.Print(err)
+					}
 				}
 			}
 		case linebot.EventTypeJoin:
@@ -89,5 +117,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
+	}
+}
+
+func sendUserProfile(user linebot.UserProfileResponse, event *linebot.Event) {
+	retString := fmt.Sprintf("使用者 %s 您好， 你的 ID 是 %s, 使用語言是 %s, 狀態為: %s\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
+	if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(user.PictureURL, user.PictureURL)).Do(); err != nil {
+		//Reply fail.
+		log.Print(err)
 	}
 }
