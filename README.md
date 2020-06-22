@@ -1,5 +1,4 @@
-LINE Group demo bot: A LINE Chatbot to demo LINE group features by Golang
-==============
+# LINE Group demo bot: A LINE Chatbot to demo LINE group features by Golang
 
  [![GoDoc](https://godoc.org/github.com/kkdai/linebot-group.svg?status.svg)](https://godoc.org/github.com/kkdai/linebot-group)  [![Build Status](https://travis-ci.org/kkdai/linebot-group.svg?branch=master)](https://travis-ci.org/kkdai/linebot-group.svg)
 
@@ -14,8 +13,10 @@ For LINE Group Event API, please check:
 ![](images/group_bot.jpg)
 
 
-How to use it
-=============
+# How to use it
+
+
+### Get Group Profile
 
 ![](images/qrcode.png)
 
@@ -25,8 +26,21 @@ How to use it
 
 3. It will show your group name and group image.
 
-Installation and Usage
-=============
+### Get Group/Room user profile 
+
+![](images/profile.jpg)
+
+1. Type any word in group/room.
+2. It will show group/room user profile.
+
+### Leave Group/Room
+
+![](images/leave.jpg)
+
+1. Type "bye".
+2. Chatbot will leave a group/room.
+
+# Installation and Usage
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
