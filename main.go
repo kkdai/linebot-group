@@ -48,6 +48,18 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, event := range events {
 		switch event.Type {
+		case linebot.EventTypeUnsend:
+			log.Println("Unsend")
+			target := ""
+			if event.Source.GroupID != "" {
+				target = event.Source.GroupID
+			} else {
+				target = event.Source.RoomID
+			}
+			if _, err = bot.PushMessage(target, linebot.NewTextMessage("不要害羞回收訊息唷!")).Do(); err != nil {
+				log.Print(err)
+			}
+
 		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
