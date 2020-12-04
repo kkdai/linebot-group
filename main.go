@@ -53,11 +53,18 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			target := ""
 			if event.Source.GroupID != "" {
 				target = event.Source.GroupID
+				if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
+					if _, err = bot.PushMessage(target, linebot.NewTextMessage(profile.DisplayName+" 不要害羞回收訊息唷!, 打個 show 來顯示資料吧！")).Do(); err != nil {
+						log.Print(err)
+					}
+				}
 			} else {
 				target = event.Source.RoomID
-			}
-			if _, err = bot.PushMessage(target, linebot.NewTextMessage("不要害羞回收訊息唷!")).Do(); err != nil {
-				log.Print(err)
+				if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
+					if _, err = bot.PushMessage(target, linebot.NewTextMessage(profile.DisplayName+" 不要害羞回收訊息唷!, 打個 show 來顯示資料吧！")).Do(); err != nil {
+						log.Print(err)
+					}
+				}
 			}
 
 		case linebot.EventTypeMessage:
@@ -67,14 +74,16 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				case event.Source.GroupID != "":
 					//In the group
 					if strings.EqualFold(message.Text, "bye") {
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Bye bye!")).Do(); err != nil {
 							log.Print(err)
 						}
 						bot.LeaveGroup(event.Source.GroupID).Do()
 					} else {
-						//Response with get member profile
-						if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
-							sendUserProfile(*profile, event)
+						if strings.EqualFold(message.Text, "show") {
+							//Response with get member profile
+							if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
+								sendUserProfile(*profile, event)
+							}
 						}
 					}
 
@@ -86,9 +95,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 						bot.LeaveRoom(event.Source.RoomID).Do()
 					} else {
-						//Response with get member profile
-						if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
-							sendUserProfile(*profile, event)
+						if strings.EqualFold(message.Text, "show") {
+							//Response with get member profile
+							if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
+								sendUserProfile(*profile, event)
+							}
 						}
 					}
 				default:
