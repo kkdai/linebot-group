@@ -51,6 +51,12 @@ type UserProfileResponse struct {
 	Language      string `json:"language"`
 }
 
+// UserIDsResponse type
+type UserIDsResponse struct {
+	UserIDs []string `json:"userIds"`
+	Next    string   `json:"next"`
+}
+
 // GroupSummaryResponse type
 type GroupSummaryResponse struct {
 	GroupID    string `json:"groupId"`
@@ -136,6 +142,8 @@ type MessagesProgressResponse struct {
 	TargetCount       int64  `json:"targetCount"`
 	FailedDescription string `json:"failedDescription"`
 	ErrorCode         int    `json:"errorCode"`
+	AcceptedTime      string `json:"acceptedTime"`
+	CompletedTime     string `json:"completedTime,omitempty"`
 }
 
 // MessagesFriendDemographicsResponse type
@@ -331,6 +339,18 @@ func decodeToUserProfileResponse(res *http.Response) (*UserProfileResponse, erro
 	return &result, nil
 }
 
+func decodeToUserIDsResponse(res *http.Response) (*UserIDsResponse, error) {
+	if err := checkResponse(res); err != nil {
+		return nil, err
+	}
+	decoder := json.NewDecoder(res.Body)
+	result := &UserIDsResponse{}
+	if err := decoder.Decode(result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func decodeToGroupSummaryResponse(res *http.Response) (*GroupSummaryResponse, error) {
 	if err := checkResponse(res); err != nil {
 		return nil, err
@@ -436,7 +456,7 @@ func decodeToRichMenuListResponse(res *http.Response) ([]*RichMenuResponse, erro
 		return nil, err
 	}
 	decoder := json.NewDecoder(res.Body)
-	var result = struct {
+	result := struct {
 		RichMenus []*RichMenuResponse `json:"richmenus"`
 	}{}
 	if err := decoder.Decode(&result); err != nil {
