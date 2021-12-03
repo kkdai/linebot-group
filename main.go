@@ -37,7 +37,7 @@ func main() {
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	b, _ := ioutil.ReadAll(r.Body)
-	fmt.Println(">>", b)
+	fmt.Println(">>", string(b))
 
 	events, err := bot.ParseRequest(r)
 
