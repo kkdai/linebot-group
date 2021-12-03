@@ -14,6 +14,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -35,6 +36,9 @@ func main() {
 }
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
+	b, _ := ioutil.ReadAll(r.Body)
+	fmt.Println(">>", b)
+
 	events, err := bot.ParseRequest(r)
 
 	if err != nil {
