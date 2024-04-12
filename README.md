@@ -15,17 +15,6 @@ For LINE Group Event API, please check:
 
 # How to use it
 
-
-### Get Group Profile
-
-![](images/qrcode.png)
-
-1. Scan this QR code add LINE Friend.
-
-2. Invite this chatbot into any group.
-
-3. It will show your group name and group image.
-
 ### Get Group/Room user profile 
 
 ![](images/profile.jpg)
